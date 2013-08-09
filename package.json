@@ -1,0 +1,37 @@
+{
+  "name": "mwc_plugin_analytics",
+  "version": "0.0.1",
+  "description": "MWC Analytics Plugin",
+  "main": "index.js",
+  "dependencies": {
+    "async": "~0.2.9"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "grunt": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-ngdocs": "*",
+    "grunt-simple-mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mywebclass/mwc_plugin_analytics.git"
+  },
+  "keywords": [
+    "mwc",
+    "mwc_plugin",
+    "analytics"
+  ],
+  "author": "T. Budiman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mywebclass/mwc_plugin_analytics/issues"
+  }
+}
