@@ -4,7 +4,14 @@
   "description": "MWC Analytics Plugin",
   "main": "index.js",
   "dependencies": {
-    "async": "~0.2.9"
+    "async": "*",
+    "redis": "*",
+    "hiredis": "*",
+    "mongoose": "*",
+    "underscore": "*",
+    "underscore.string": "*",
+    "moment": "*",
+    "express-useragent": "*"
   },
   "devDependencies": {
     "mocha": "*",
