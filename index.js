@@ -37,8 +37,8 @@ exports.routes = function(mwc) {
     var referrerUrl = request.header('Referer'); //http://expressjs.com/api.html#req.get
 
 
-    //for hitpixels referer is USUALLY the URL of page, where it is placed,
-    //if referrer !=siteName - means somebody places referrer on 3rd party site to fake the statistics
+    //for hotpixels referer is USUALLY the URL of page, where it is placed,
+    //if referrer DO NOT INCLUDE siteName - means somebody placed referrer on 3rd party site to fake the statistics
 
     var refregex=new RegExp('/'+siteName+'/','i');
     if(refregex.test(referrerUrl)){
