@@ -1,36 +1,18 @@
-mwc_plugin_analytics
-====================
+@ngdoc overview
+@name mwc_plugin_analytics-guide
+@description
 
 Analytics MWC Plugin
+====================
 
+[![Stories in Ready](https://badge.waffle.io/mywebclass/mwc_plugin_analytics.png)](http://waffle.io/mywebclass/mwc_plugin_analytics)
 
-Example,  how we can made this module
+Implemented:
 
-```javascript
-exports.extendCore = function(core){
- core.analitycs=........;
-}
+Track regular http request with:
 
-exports.extendMiddleware = function(core){
-  
-  function(request, response, next){
-     core.analytics.logUrl(request.originalUrl, request.ip, request.user,function(err){
-       if(err) throw err;
-       next();
-     });
-   };
+    http://[analytics.server]/analytics/[sitename]/hotpixel.png?originalUrl=[originalUrl]
 
-};
+Real-time storing in Redis
 
-
-exports.setRoutes = function(core){
-
-  core.app.get( '/hotpixel/:id' , function(request,response){
-     core.analytics.logHotPixel(request.params.id, request.ip, request.user,function(err){
-       if err throw err;
-       response.sendfile('pixel.jpg);
-      });
-  });
-
-}
-```
+Summarize in MongoDB collection, updated every 20 seconds.
