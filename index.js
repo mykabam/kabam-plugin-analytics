@@ -1,23 +1,25 @@
-var url = require('url'),
-  useragent = require('express-useragent'),
+var useragent = require('express-useragent'),
   transientAnalytics = require('./lib/transientAnalytics'),
-  persistentAnalytics = null;
+  persistentAnalytics = require('./lib/persistentAnalytics');
 
 exports.model = {
   Total: require('./models/total').modelFactory,
   TotalMinute: require('./models/totalMinute').modelFactory
 };
 
+exports.core = {
+  transientAnalytics: transientAnalytics,
+  persistentAnalytics: persistentAnalytics
+};
+
 exports.middleware = [
   function(mwc) {
+    persistentAnalytics.initializeModels(mwc.model.Total, mwc.model.TotalMinute);
+    persistentAnalytics.startTimer(2000);
     return useragent.express();
   },
   function(mwc) {
-    var hostUrl = mwc.config.hostUrl ? mwc.config.hostUrl : 'http://localhost',
-      site = url.parse(hostUrl).host;
-
     transientAnalytics.useRedis(mwc.redisClient);
-    // persistentAnalytics = require('./lib/persistentAnalytics');
     return transientAnalytics.store;
   }
 ];
