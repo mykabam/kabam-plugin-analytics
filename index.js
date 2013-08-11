@@ -51,6 +51,7 @@ exports.routes = function(mwc) {
     response.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.set('Pragma', 'no-cache');
     response.set('Expires', 0);
+    response.set('Etag', 'imageNOTtoBECachedInBrowser'+Math.floor(Math.random()*1000)+'='+(new Date().getTime()));
     response.sendfile(__dirname + '/public/img/hotpixel.png');
   });
 };
