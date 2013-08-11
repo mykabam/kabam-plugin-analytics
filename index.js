@@ -1,6 +1,9 @@
 var useragent = require('express-useragent'),
   transientAnalytics = require('./lib/transientAnalytics'),
-  persistentAnalytics = require('./lib/persistentAnalytics');
+  persistentAnalytics = require('./lib/persistentAnalytics'),
+  fs = require('fs');
+
+var hotPixelString = fs.readFileSync(__dirname + '/public/img/hotpixel.png',{'encoding':'binary'});
 
 exports.model = {
   Total: require('./models/total').modelFactory,
@@ -52,6 +55,7 @@ exports.routes = function(mwc) {
     response.set('Pragma', 'no-cache');
     response.set('Expires', 0);
     response.set('Etag', 'imageNOTtoBECachedInBrowser'+Math.floor(Math.random()*1000)+'='+(new Date().getTime()));
-    response.sendfile(__dirname + '/public/img/hotpixel.png');
+    res.type('png');
+    response.send(200,hotPixelString);
   });
 };
