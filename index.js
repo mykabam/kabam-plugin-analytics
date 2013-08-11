@@ -55,7 +55,7 @@ exports.routes = function(mwc) {
     response.set('Pragma', 'no-cache');
     response.set('Expires', 0);
     response.set('Etag', 'imageNOTtoBECachedInBrowser'+Math.floor(Math.random()*1000)+'='+(new Date().getTime()));
-    res.type('png');
+    response.type('png');
     response.send(200,hotPixelString);
   });
 };
