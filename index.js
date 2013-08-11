@@ -1,6 +1,9 @@
 var useragent = require('express-useragent'),
   transientAnalytics = require('./lib/transientAnalytics'),
-  persistentAnalytics = require('./lib/persistentAnalytics');
+  persistentAnalytics = require('./lib/persistentAnalytics'),
+  fs = require('fs');
+
+var hotPixelString = fs.readFileSync(__dirname + '/public/img/hotpixel.png',{'encoding':'binary'});
 
 exports.model = {
   Total: require('./models/total').modelFactory,
@@ -25,10 +28,34 @@ exports.middleware = [
 ];
 
 exports.routes = function(mwc) {
-  mwc.app.get('/analytics/:site/hotpixel.png', function(request, response) {
+  mwc.app.get(/^\/analytics\/([\/0-9a-z\.]+)\/hotpixel.png$/, function(request, response) {
+    //we react on site name like this
+    /*
+     /analytics/somesite.org/mega/hotpixel.png -> somesite.org/mega
+     /analytics/somesite.org/hotpixel.png -> somesite.org
+     /analytics/localhost/hotpixel.png -> localhost
+    */
+
+    var siteName = request.params[0]; // this is sitename parsed from url, we can process it
+    var referrerUrl = request.header('Referer'); //http://expressjs.com/api.html#req.get
+
+
+    //for hotpixels referer is USUALLY the URL of page, where it is placed,
+    //if referrer DO NOT INCLUDE siteName - means somebody placed referrer on 3rd party site to fake the statistics
+
+    var refregex=new RegExp('/'+siteName+'/','i');
+    if(refregex.test(referrerUrl)){
+      //this is correct hotpixel
+    } else {
+      //this is cheating!
+    }
+
+
     response.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.set('Pragma', 'no-cache');
     response.set('Expires', 0);
-    response.sendfile(__dirname + '/public/img/hotpixel.png');
+    response.set('Etag', 'imageNOTtoBECachedInBrowser'+Math.floor(Math.random()*1000)+'='+(new Date().getTime()));
+    response.type('png');
+    response.send(200,hotPixelString);
   });
 };
