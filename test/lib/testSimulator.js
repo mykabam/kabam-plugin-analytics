@@ -34,7 +34,6 @@ testSimulator.getRandomUserAgent = function() {
 testSimulator.randomRequest = function(app) {
   var url = '/analytics/' + site + '/hotpixel.png?originalUrl=' + testSimulator.getRandomUrl(),
     ua = testSimulator.getRandomUserAgent();
-  console.log(url, ua);
   return supertest(app)
     .get(url)
     .set('user-agent', ua);
@@ -42,12 +41,11 @@ testSimulator.randomRequest = function(app) {
 
 testSimulator.runOnce = function(app) {
   testSimulator
-    .randomRequest()
+    .randomRequest(app)
     .end(function(err, res) {
       if (err) {
         throw err;
       }
-      console.log('run ');
     });
 };
 
@@ -60,10 +58,8 @@ testSimulator.runMany = function(app, x) {
 testSimulator.testServerFactory = function() {
   var config = require('./../config.json').development,
     mwc = mwcKernel(config);
-  var s = require('http');
   mwc.usePlugin(require('./../../index'));
-  console.log(s instanceof http.constructor);
-  mwc.start(http);
+  mwc.start();
   return mwc;
 };
 
