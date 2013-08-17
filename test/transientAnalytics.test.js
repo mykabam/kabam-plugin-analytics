@@ -1,6 +1,7 @@
 var should = require('should'),
   redis = require('redis'),
-  moment = require('moment');
+  moment = require('moment'),
+  testSimulator = require('./lib/testSimulator');
 
 describe('transientAnalytics', function() {
 
@@ -118,8 +119,17 @@ describe('transientAnalytics', function() {
     it('store');
   });
 
+  describe('#storeMiddleware()', function() {
+    it('storeMiddleware');
+  });
+
   describe('#getTotal()', function() {
-    it('getTotal');
+    var mwc;
+    it('getTotal', function(done) {
+      mwc = testSimulator.testServerFactory();
+      testSimulator.runMany(mwc.app, 10);
+      done();
+    });
   });
 
   describe('#getData()', function() {
@@ -146,11 +156,9 @@ describe('transientAnalytics', function() {
     it('totalBySecondTaskFactory');
   });
 
-
   describe('#browserTaskFactory()', function() {
     it('browserTaskFactory');
   });
-
 
   describe('#pageTaskFactory()', function() {
     it('pageTaskFactory');

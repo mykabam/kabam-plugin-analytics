@@ -22,7 +22,8 @@
     "grunt-contrib-watch": "*",
     "grunt-ngdocs": "*",
     "grunt-simple-mocha": "*",
-    "should": "*"
+    "should": "*",
+    "supertest": "*"
   },
   "scripts": {
     "test": "mocha -R spec"

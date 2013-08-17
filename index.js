@@ -23,7 +23,7 @@ exports.middleware = [
   },
   function(mwc) {
     transientAnalytics.useRedis(mwc.redisClient);
-    return transientAnalytics.store;
+    return transientAnalytics.storeMiddleware;
   }
 ];
 
