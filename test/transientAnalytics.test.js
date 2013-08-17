@@ -125,7 +125,7 @@ describe('transientAnalytics', function() {
 
   describe('#getTotal()', function() {
     var mwc;
-    it('getTotal', function(done) {
+    it.skip('getTotal', function(done) {
       mwc = testSimulator.testServerFactory();
       testSimulator.runMany(mwc.app, 10);
       done();
@@ -166,6 +166,23 @@ describe('transientAnalytics', function() {
 
   describe('#broadcastFactory()', function() {
     it('broadcastFactory');
+  });
+
+  describe('#deleteAll()', function() {
+
+    it('should delete data', function(done) {
+      transientAnalytics.deleteAll(function(err) {
+        should.not.exists(err);
+        transientAnalytics.getTotal(function(err2, total) {
+          if (err2) {
+            throw new Error(err2);
+          }
+          total.should.be.equal(0);
+          done();
+        });
+      });
+    });
+
   });
 
 });
