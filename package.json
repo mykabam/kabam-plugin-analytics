@@ -1,5 +1,5 @@
 {
-  "name": "mwc_plugin_analytics",
+  "name": "kabam-plugin-analytics",
   "version": "0.0.1",
   "description": "MWC Analytics Plugin",
   "main": "index.js",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mywebclass/mwc_plugin_analytics.git"
+    "url": "git://github.com/mykabam/kabam-plugin-analytics.git"
   },
   "keywords": [
     "mwc",
@@ -38,7 +38,33 @@
   ],
   "author": "T. Budiman",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Keith Williams (copyright owner)",
+      "url": "http://mywebclass.org",
+      "email": "keith@mywebclass.org"
+    },
+    {
+      "name": "Anatolij Ostroumov (developer)",
+      "url": "https://github.com/vodolaz095",
+      "email": "ostroumov095@gmail.com"
+    },
+    {
+      "name": "The Budiman (responsible developer)",
+      "url": "https://github.com/valmy",
+      "email": "tbudiman@gmail.com"
+    },
+    {
+      "name": "Alexander Petrovich (developer)",
+      "url": "https://github.com/chopachom"
+    },
+    {
+      "name": "Muhammad Ghazali (developer)",
+      "url": "https://github.com/muhammadghazali",
+      "email": "muhammadghazali2480@gmail.com"
+    }
+  ],
   "bugs": {
-    "url": "https://github.com/mywebclass/mwc_plugin_analytics/issues"
+    "url": "https://github.com/mykabam/kabam-plugin-analytics/issues"
   }
 }
