@@ -1,6 +1,6 @@
 var supertest = require('supertest'),
   http = require('http'),
-  mwcKernel = require('mwc_kernel');
+  kabamKernel = require('kabam-kernel');
 
 var uaStrings = [
   'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.16) Gecko/20111108 Iceweasel/3.5.16 (like Firefox/3.5.16)',
@@ -57,10 +57,10 @@ testSimulator.runMany = function(app, x) {
 
 testSimulator.testServerFactory = function() {
   var config = require('./../config.json').development,
-    mwc = mwcKernel(config);
-  mwc.usePlugin(require('./../../index'));
-  mwc.start();
-  return mwc;
+    kabam = kabamKernel(config);
+  kabam.usePlugin(require('./../../index'));
+  kabam.start();
+  return kabam;
 };
 
 module.exports = exports = testSimulator;

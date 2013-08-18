@@ -24,7 +24,7 @@
     "grunt-simple-mocha": "*",
     "should": "*",
     "supertest": "*",
-    "mwc_kernel": "git+https://github.com/mykabam/kabam-kernel.git"
+    "kabam-kernel": "git+https://github.com/mykabam/kabam-kernel.git"
   },
   "scripts": {
     "test": "mocha -R spec"
