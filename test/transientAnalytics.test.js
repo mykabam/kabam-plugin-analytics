@@ -115,72 +115,104 @@ describe('transientAnalytics', function() {
 
   });
 
-  describe('#store()', function() {
-    it('store');
-  });
+  describe('Storing and Retrieving Data', function() {
 
-  describe('#storeMiddleware()', function() {
-    it('storeMiddleware');
-  });
+    var kabam;
 
-  describe('#getTotal()', function() {
-    var mwc;
-    it.skip('getTotal', function(done) {
-      mwc = testSimulator.testServerFactory();
-      testSimulator.runMany(mwc.app, 10);
-      done();
-    });
-  });
+    before(function(done) {
 
-  describe('#getData()', function() {
-    it('getData');
-  });
-
-  describe('#getPages()', function() {
-    it('getPages');
-  });
-
-  describe('#getTotalMinute()', function() {
-    it('getTotalMinute');
-  });
-
-  describe('#getDataMinute()', function() {
-    it('getDataMinute');
-  });
-
-  describe('#getPagesMinute()', function() {
-    it('getPagesMinute');
-  });
-
-  describe('#totalBySecondTaskFactory()', function() {
-    it('totalBySecondTaskFactory');
-  });
-
-  describe('#browserTaskFactory()', function() {
-    it('browserTaskFactory');
-  });
-
-  describe('#pageTaskFactory()', function() {
-    it('pageTaskFactory');
-  });
-
-  describe('#broadcastFactory()', function() {
-    it('broadcastFactory');
-  });
-
-  describe('#deleteAll()', function() {
-
-    it('should delete data', function(done) {
       transientAnalytics.deleteAll(function(err) {
-        should.not.exists(err);
-        transientAnalytics.getTotal(function(err2, total) {
-          if (err2) {
-            throw new Error(err2);
+        if (err) {
+          throw new Error(err);
+        }
+
+        kabam = testSimulator.testServerFactory();
+        testSimulator.runMany(kabam.app, 512, done);
+
+      });
+    });
+
+    after(function(done) {
+      transientAnalytics.deleteAll(function(err) {
+        if (err) {
+          throw new Error(err);
+        }
+        done();
+      });
+    });
+
+    describe('#store()', function() {
+      it('store');
+    });
+
+    describe('#storeMiddleware()', function() {
+      it('storeMiddleware');
+    });
+
+    describe('#getTotal()', function() {
+
+      it('getTotal', function(done) {
+        transientAnalytics.getTotal(function(err, total) {
+          if (err) {
+            throw new Error(err);
           }
-          total.should.be.equal(0);
-          done();
+          total.should.equal(512);
         });
       });
+
+    });
+
+    describe('#getData()', function() {
+      it('getData');
+    });
+
+    describe('#getPages()', function() {
+      it('getPages');
+    });
+
+    describe('#getTotalMinute()', function() {
+      it('getTotalMinute');
+    });
+
+    describe('#getDataMinute()', function() {
+      it('getDataMinute');
+    });
+
+    describe('#getPagesMinute()', function() {
+      it('getPagesMinute');
+    });
+
+    describe('#totalBySecondTaskFactory()', function() {
+      it('totalBySecondTaskFactory');
+    });
+
+    describe('#browserTaskFactory()', function() {
+      it('browserTaskFactory');
+    });
+
+    describe('#pageTaskFactory()', function() {
+      it('pageTaskFactory');
+    });
+
+    describe('#broadcastFactory()', function() {
+      it('broadcastFactory');
+    });
+
+    describe('#deleteAll()', function() {
+
+      it('should delete all data', function(done) {
+        transientAnalytics.deleteAll(function(err) {
+          should.not.exists(err);
+          transientAnalytics.getTotal(function(err2, total) {
+            if (err2) {
+              throw new Error(err2);
+            }
+            total.should.be.equal(0);
+            done();
+          });
+        });
+      });
+
     });
 
   });

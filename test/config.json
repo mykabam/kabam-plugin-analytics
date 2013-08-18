@@ -2,7 +2,7 @@
   "development":{
     "hostUrl":"http://localhost/",
     "secret":"hammer on the keyboard",
-    "mongoUrl":"mongodb://localhost/mwc",
+    "mongoUrl":"mongodb://localhost/kabam",
     "redis":{"host":"localhost","port":6379},
     "sessionStorage": "redis",
     "spine": {
@@ -20,7 +20,7 @@
   "production":{
     "hostUrl":"http://localhost/",
     "secret":"hammer on the keyboard",
-    "mongoUrl":"mongodb://localhost/mwc",
+    "mongoUrl":"mongodb://localhost/kabam",
     "redis":{"host":"localhost","port":6379},
     "sessionStorage": "redis",
     "spine": {
@@ -38,7 +38,7 @@
   "staging":{
     "hostUrl":"http://localhost/",
     "secret":"hammer on the keyboard",
-    "mongoUrl":"mongodb://localhost/mwc_test",
+    "mongoUrl":"mongodb://localhost/kabam_test",
     "redis":{"host":"localhost","port":6379},
     "sessionStorage": "redis",
     "spine": {

@@ -1,5 +1,6 @@
 var supertest = require('supertest'),
   http = require('http'),
+  async = require('async'),
   kabamKernel = require('kabam-kernel');
 
 var uaStrings = [
@@ -9,7 +10,7 @@ var uaStrings = [
 ];
 
 var testSimulator = {};
-var site = 'testsite';
+var site = 'localhost';
 
 var urls = [
   '/page0/test1',
@@ -18,6 +19,8 @@ var urls = [
   '/page1/test4',
   '/page2/test5'
 ];
+
+var hits = 0;
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -39,20 +42,38 @@ testSimulator.randomRequest = function(app) {
     .set('user-agent', ua);
 };
 
-testSimulator.runOnce = function(app) {
+testSimulator.runOnce = function(app, cb) {
   testSimulator
     .randomRequest(app)
     .end(function(err, res) {
       if (err) {
         throw err;
       }
+      hits = hits + 1;
+      if (typeof cb === 'function') {
+        cb();
+      };
     });
 };
 
-testSimulator.runMany = function(app, x) {
-  for (var i = 0; i <= x; i++) {
-    testSimulator.runOnce(app);
+testSimulator.runMany = function(app, x, cb) {
+
+  var tasks = [];
+  var run = function(cb) {
+    testSimulator.runOnce(app, function() {
+      cb();
+    });
+  };
+
+  for (var i = 0; i < x; i++) {
+    tasks.push(run);
   }
+  async.parallel(tasks, function(err, results) {
+    console.log('hits: ', hits);
+    if (typeof cb === 'function') {
+      cb();
+    };
+  });
 };
 
 testSimulator.testServerFactory = function() {
