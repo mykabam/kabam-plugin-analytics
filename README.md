@@ -21,9 +21,9 @@ Responsibility guidelines
 ================
 Every kabam plugin and package has the responsible developer. His duties are
 
-1) Maintain the package - fix and found bugs from upgrading modules included or nodejs version change
-2) React on bug reports
-3) Accept/deny pull request.
+- Maintain the package - fix and found bugs from upgrading modules included or nodejs version change
+- React on bug reports
+- Accept/deny pull request.
 
 The `Push` and `npm publish` privilege is the right of the `Responsible developer`, but the `fork` - is for everybody.
 
