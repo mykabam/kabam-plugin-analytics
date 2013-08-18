@@ -1,6 +1,7 @@
 var should = require('should'),
   redis = require('redis'),
-  moment = require('moment');
+  moment = require('moment'),
+  testSimulator = require('./lib/testSimulator');
 
 describe('transientAnalytics', function() {
 
@@ -118,8 +119,17 @@ describe('transientAnalytics', function() {
     it('store');
   });
 
+  describe('#storeMiddleware()', function() {
+    it('storeMiddleware');
+  });
+
   describe('#getTotal()', function() {
-    it('getTotal');
+    var mwc;
+    it.skip('getTotal', function(done) {
+      mwc = testSimulator.testServerFactory();
+      testSimulator.runMany(mwc.app, 10);
+      done();
+    });
   });
 
   describe('#getData()', function() {
@@ -146,11 +156,9 @@ describe('transientAnalytics', function() {
     it('totalBySecondTaskFactory');
   });
 
-
   describe('#browserTaskFactory()', function() {
     it('browserTaskFactory');
   });
-
 
   describe('#pageTaskFactory()', function() {
     it('pageTaskFactory');
@@ -158,6 +166,23 @@ describe('transientAnalytics', function() {
 
   describe('#broadcastFactory()', function() {
     it('broadcastFactory');
+  });
+
+  describe('#deleteAll()', function() {
+
+    it('should delete data', function(done) {
+      transientAnalytics.deleteAll(function(err) {
+        should.not.exists(err);
+        transientAnalytics.getTotal(function(err2, total) {
+          if (err2) {
+            throw new Error(err2);
+          }
+          total.should.be.equal(0);
+          done();
+        });
+      });
+    });
+
   });
 
 });

@@ -1,0 +1,56 @@
+{
+  "development":{
+    "hostUrl":"http://localhost/",
+    "secret":"hammer on the keyboard",
+    "mongoUrl":"mongodb://localhost/mwc",
+    "redis":{"host":"localhost","port":6379},
+    "sessionStorage": "redis",
+    "spine": {
+      "domains": ["urgentTasks", "veryUrgentTasks", "lessUrgentTasks", "tasksToForgetAbout"]
+    },
+    "passport":{
+      "GITHUB_CLIENT_ID":"--insert-github-client-id-here--",
+      "GITHUB_CLIENT_SECRET": "--insert-github-client-secret-here--",
+      "TWITTER_CONSUMER_KEY":"--insert-twitter-consumer-key-here--",
+      "TWITTER_CONSUMER_SECRET": "--insert-twitter-consumer-secret-here--",
+      "FACEBOOK_APP_ID":"--insert-facebook-app-id-here--",
+      "FACEBOOK_APP_SECRET":"--insert-facebook-app-secret-here--"
+    }
+  },
+  "production":{
+    "hostUrl":"http://localhost/",
+    "secret":"hammer on the keyboard",
+    "mongoUrl":"mongodb://localhost/mwc",
+    "redis":{"host":"localhost","port":6379},
+    "sessionStorage": "redis",
+    "spine": {
+      "domains": ["urgentTasks", "veryUrgentTasks", "lessUrgentTasks", "tasksToForgetAbout"]
+    },
+    "passport":{
+      "GITHUB_CLIENT_ID":"--insert-github-client-id-here--",
+      "GITHUB_CLIENT_SECRET": "--insert-github-client-secret-here--",
+      "TWITTER_CONSUMER_KEY":"--insert-twitter-consumer-key-here--",
+      "TWITTER_CONSUMER_SECRET": "--insert-twitter-consumer-secret-here--",
+      "FACEBOOK_APP_ID":"--insert-facebook-app-id-here--",
+      "FACEBOOK_APP_SECRET":"--insert-facebook-app-secret-here--"
+    }
+  },
+  "staging":{
+    "hostUrl":"http://localhost/",
+    "secret":"hammer on the keyboard",
+    "mongoUrl":"mongodb://localhost/mwc_test",
+    "redis":{"host":"localhost","port":6379},
+    "sessionStorage": "redis",
+    "spine": {
+      "domains": ["urgentTasks", "veryUrgentTasks", "lessUrgentTasks", "tasksToForgetAbout"]
+    },
+    "passport":{
+      "GITHUB_CLIENT_ID":"--insert-github-client-id-here--",
+      "GITHUB_CLIENT_SECRET": "--insert-github-client-secret-here--",
+      "TWITTER_CONSUMER_KEY":"--insert-twitter-consumer-key-here--",
+      "TWITTER_CONSUMER_SECRET": "--insert-twitter-consumer-secret-here--",
+      "FACEBOOK_APP_ID":"--insert-facebook-app-id-here--",
+      "FACEBOOK_APP_SECRET":"--insert-facebook-app-secret-here--"
+    }
+  }
+}

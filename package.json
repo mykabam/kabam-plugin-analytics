@@ -22,7 +22,9 @@
     "grunt-contrib-watch": "*",
     "grunt-ngdocs": "*",
     "grunt-simple-mocha": "*",
-    "should": "*"
+    "should": "*",
+    "supertest": "*",
+    "mwc_kernel": "git+https://github.com/mywebclass/mwc_kernel.git"
   },
   "scripts": {
     "test": "mocha -R spec"
