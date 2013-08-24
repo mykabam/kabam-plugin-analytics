@@ -1,6 +1,7 @@
-exports.modelFactory = function(mongoose, config) {
+exports.modelFactory = function(kabamKernel) {
 
-  var totalSchema = mongoose.Schema({
+  var mongoose = kabamKernel.mongoose,
+    totalSchema = mongoose.Schema({
     site: String,
     timestamp: Date,
     hits: Number,

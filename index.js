@@ -16,19 +16,19 @@ exports.core = {
 };
 
 exports.middleware = [
-  function(kabam) {
-    persistentAnalytics.initializeModels(kabam.model.Total, kabam.model.TotalMinute);
+  function(kabamKernel) {
+    persistentAnalytics.initializeModels(kabamKernel.model.Total, kabamKernel.model.TotalMinute);
     persistentAnalytics.startTimer(2000);
     return useragent.express();
   },
-  function(kabam) {
-    transientAnalytics.useRedis(kabam.redisClient);
+  function(kabamKernel) {
+    transientAnalytics.useRedis(kabamKernel.redisClient);
     return transientAnalytics.storeMiddleware;
   }
 ];
 
-exports.routes = function(kabam) {
-  kabam.app.get(/^\/analytics\/([\/0-9a-z\.]+)\/hotpixel.png$/, function(request, response) {
+exports.routes = function(kabamKernel) {
+  kabamKernel.app.get(/^\/analytics\/([\/0-9a-z\.]+)\/hotpixel.png$/, function(request, response) {
     //we react on site name like this
     /*
      /analytics/somesite.org/mega/hotpixel.png -> somesite.org/mega
