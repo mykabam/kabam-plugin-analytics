@@ -1,6 +1,7 @@
 var supertest = require('supertest'),
   http = require('http'),
   async = require('async'),
+  moment = require('moment'),
   kabamKernel = require('kabam-kernel');
 
 var uaStrings = [
@@ -59,19 +60,16 @@ testSimulator.runOnce = function(app, cb) {
 testSimulator.runMany = function(app, x, cb) {
 
   var tasks = [];
-  var run = function(cb) {
-    testSimulator.runOnce(app, function() {
-      cb();
-    });
+  var run = function(runcb) {
+    testSimulator.runOnce(app, runcb);
   };
 
   for (var i = 0; i < x; i++) {
     tasks.push(run);
   }
   async.parallel(tasks, function(err, results) {
-    console.log('hits: ', hits);
     if (typeof cb === 'function') {
-      cb();
+      cb(err);
     };
   });
 };
@@ -82,6 +80,12 @@ testSimulator.testServerFactory = function() {
   kabam.usePlugin(require('./../../index'));
   kabam.start();
   return kabam;
+};
+
+testSimulator.statistics = function() {
+  return {
+    hits: hits
+  };
 };
 
 module.exports = exports = testSimulator;

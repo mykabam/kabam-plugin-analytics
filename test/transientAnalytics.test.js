@@ -117,7 +117,7 @@ describe('transientAnalytics', function() {
 
   describe('Storing and Retrieving Data', function() {
 
-    var kabam;
+    var kabamKernel;
 
     before(function(done) {
 
@@ -126,8 +126,8 @@ describe('transientAnalytics', function() {
           throw new Error(err);
         }
 
-        kabam = testSimulator.testServerFactory();
-        testSimulator.runMany(kabam.app, 512, done);
+        kabamKernel = testSimulator.testServerFactory();
+        testSimulator.runMany(kabamKernel.app, 128, done);
 
       });
     });
@@ -152,11 +152,13 @@ describe('transientAnalytics', function() {
     describe('#getTotal()', function() {
 
       it('getTotal', function(done) {
+        var statistics = testSimulator.statistics();
         transientAnalytics.getTotal(function(err, total) {
           if (err) {
             throw new Error(err);
           }
-          total.should.equal(512);
+          total.should.equal(statistics.hits);
+          done();
         });
       });
 
