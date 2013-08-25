@@ -2,6 +2,7 @@ var supertest = require('supertest'),
   http = require('http'),
   async = require('async'),
   moment = require('moment'),
+  expressUseragent = require('express-useragent'),
   kabamKernel = require('kabam-kernel');
 
 var uaStrings = [
@@ -21,29 +22,58 @@ var urls = [
   '/page2/test5'
 ];
 
-var hits = 0;
+var hits = 0,
+  minute,
+  pages = {},
+  browsers = {},
+  versions = {},
+  oses = {},
+  platforms = {};
+
+var incCounter = function(items, item) {
+  if (items.hasOwnProperty(item)) {
+    items[item] = items[item] + 1;
+  } else {
+    items[item] = 1;
+  }
+};
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 testSimulator.getRandomUrl = function() {
-  return urls[getRandomInt(0, urls.length)];
+  return urls[getRandomInt(0, urls.length - 1)];
 };
 
 testSimulator.getRandomUserAgent = function() {
-  return uaStrings[getRandomInt(0, uaStrings.length)];
+  return uaStrings[getRandomInt(0, uaStrings.length - 1)];
 };
 
 testSimulator.randomRequest = function(app) {
-  var url = '/analytics/' + site + '/hotpixel.png?originalUrl=' + testSimulator.getRandomUrl(),
+  var rndUrl = testSimulator.getRandomUrl(),
+    url = '/analytics/' + site + '/hotpixel.png',
     ua = testSimulator.getRandomUserAgent();
+
+  var uao = expressUseragent.parse(ua);
+  if (uao != null) {
+    incCounter(browsers, uao.Browser);
+  }
+
+  incCounter(pages, rndUrl);
+
   return supertest(app)
     .get(url)
+    .set('referer', rndUrl)
     .set('user-agent', ua);
 };
 
 testSimulator.runOnce = function(app, cb) {
+
+  if (minute === 'undefined') {
+    minute = moment().format('YYYYMMDDHHmm');
+  }
+
   testSimulator
     .randomRequest(app)
     .end(function(err, res) {
@@ -60,6 +90,7 @@ testSimulator.runOnce = function(app, cb) {
 testSimulator.runMany = function(app, x, cb) {
 
   var tasks = [];
+  minute = moment().format('YYYYMMDDHHmm');
   var run = function(runcb) {
     testSimulator.runOnce(app, runcb);
   };
@@ -84,7 +115,13 @@ testSimulator.testServerFactory = function() {
 
 testSimulator.statistics = function() {
   return {
-    hits: hits
+    hits: hits,
+    minute: minute,
+    pages: pages,
+    browsers: browsers,
+    versions: versions,
+    oses: oses,
+    platforms: platforms
   };
 };
 

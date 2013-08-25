@@ -29,25 +29,15 @@ exports.middleware = [
 
 exports.routes = function(kabamKernel) {
   kabamKernel.app.get(/^\/analytics\/([\/0-9a-z\.]+)\/hotpixel.png$/, function(request, response) {
-    //we react on site name like this
     /*
+     we react on site name like this:
+
      /analytics/somesite.org/mega/hotpixel.png -> somesite.org/mega
      /analytics/somesite.org/hotpixel.png -> somesite.org
      /analytics/localhost/hotpixel.png -> localhost
-    */
 
-    var siteName = request.params[0]; // this is sitename parsed from url, we can process it
-    var referrerUrl = request.header('Referer'); //http://expressjs.com/api.html#req.get
-
-    //for hotpixels referer is USUALLY the URL of page, where it is placed,
-    //if referrer DO NOT INCLUDE siteName - means somebody placed referrer on 3rd party site to fake the statistics
-
-    var refregex = new RegExp('/'+siteName+'/','i');
-    if (refregex.test(referrerUrl)) {
-      //this is correct hotpixel
-    } else {
-      //this is cheating!
-    }
+     Note: processing is handled in the middleware
+     */
 
     response.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     response.set('Pragma', 'no-cache');

@@ -117,7 +117,9 @@ describe('transientAnalytics', function() {
 
   describe('Storing and Retrieving Data', function() {
 
+    this.timeout(4000);
     var kabamKernel;
+    var statistics;
 
     before(function(done) {
 
@@ -125,10 +127,13 @@ describe('transientAnalytics', function() {
         if (err) {
           throw new Error(err);
         }
-
         kabamKernel = testSimulator.testServerFactory();
-        testSimulator.runMany(kabamKernel.app, 128, done);
+        testSimulator.runMany(kabamKernel.app, 128, function() {
+          statistics = testSimulator.statistics();
 
+          // give time for the server to finish processing requests
+          setTimeout(done, 1000);
+        });
       });
     });
 
@@ -151,8 +156,7 @@ describe('transientAnalytics', function() {
 
     describe('#getTotal()', function() {
 
-      it('getTotal', function(done) {
-        var statistics = testSimulator.statistics();
+      it('getTotal should return the total hits', function(done) {
         transientAnalytics.getTotal(function(err, total) {
           if (err) {
             throw new Error(err);
@@ -165,15 +169,81 @@ describe('transientAnalytics', function() {
     });
 
     describe('#getData()', function() {
-      it('getData');
+
+      it('getData("ip") should return an object containing IP statistics', function(done) {
+        transientAnalytics.getData('ip', function(err, data) {
+          if (err) {
+            throw new Error(err);
+          }
+          data.should.be.eql({ '127.0.0.1': statistics.hits });
+          done();
+        });
+      });
+
+      it('getData("browser") should return an object containing browser statistics', function(done) {
+        transientAnalytics.getData('browser', function(err, data) {
+          if (err) {
+            throw new Error(err);
+          }
+          data.should.be.eql(statistics.browsers);
+          done();
+        });
+      });
+
+      it.skip('getData("version") should return an object containing browser version statistics', function(done) {
+        transientAnalytics.getData('version', function(err, data) {
+          if (err) {
+            throw new Error(err);
+          }
+          data.should.be.eql(statistics.versions);
+          done();
+        });
+      });
+
+      it('getData("platform") should return an object containing browser statistics', function(done) {
+        transientAnalytics.getData('platform', function(err, data) {
+          if (err) {
+            throw new Error(err);
+          }
+          data.should.be.eql(statistics.platforms);
+          done();
+        });
+      });
+
+      it('getData("os") should return an object containing browser statistics', function(done) {
+        transientAnalytics.getData('os', function(err, data) {
+          if (err) {
+            throw new Error(err);
+          }
+          data.should.be.eql(statistics.oses);
+          done();
+        });
+      });
+
     });
 
     describe('#getPages()', function() {
-      it('getPages');
+      it.skip('getPages should return an object containing hits statitics by page', function(done) {
+        transientAnalytics.getPages(function(err, pageobj) {
+          if (err) {
+            throw new Error(err);
+          }
+          pageobj.should.eql(statistics.pages);
+          done();
+        });
+      });
     });
 
     describe('#getTotalMinute()', function() {
-      it('getTotalMinute');
+      it.skip('getTotalMinute should return the total hits in a particular minute', function(done) {
+        transientAnalytics.getTotalMinute(statistics.minute, function(err, total) {
+          if (err) {
+            throw new Error(err);
+          }
+          total.should.be.equal(statistics.hits);
+          done();
+        });
+      });
     });
 
     describe('#getDataMinute()', function() {
@@ -181,7 +251,16 @@ describe('transientAnalytics', function() {
     });
 
     describe('#getPagesMinute()', function() {
-      it('getPagesMinute');
+      it.skip('getPagesMinute should return an object containing hits statitics by page in a particular minute',
+         function(done) {
+           transientAnalytics.getPagesMinute(statistics.minute, function(err, pageobj) {
+             if (err) {
+               throw new Error(err);
+             }
+             pageobj.should.be.eql(statistics.pages);
+             done();
+           });
+         });
     });
 
     describe('#totalBySecondTaskFactory()', function() {
@@ -202,7 +281,7 @@ describe('transientAnalytics', function() {
 
     describe('#deleteAll()', function() {
 
-      it('should delete all data', function(done) {
+      it.skip('should delete all data', function(done) {
         transientAnalytics.deleteAll(function(err) {
           should.not.exists(err);
           transientAnalytics.getTotal(function(err2, total) {
