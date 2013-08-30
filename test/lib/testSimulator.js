@@ -3,6 +3,7 @@ var supertest = require('supertest'),
   async = require('async'),
   moment = require('moment'),
   expressUseragent = require('express-useragent'),
+  _s = require('underscore.string'),
   kabamKernel = require('kabam-kernel');
 
 var uaStrings = [
@@ -57,7 +58,10 @@ testSimulator.randomRequest = function(app) {
 
   var uao = expressUseragent.parse(ua);
   if (uao != null) {
-    incCounter(browsers, uao.Browser);
+    incCounter(browsers, _s.classify(uao.Browser));
+    incCounter(versions, _s.classify(uao.Version));
+    incCounter(oses, _s.classify(uao.OS.replace(/[\(\)]/, '', 'gi')));
+    incCounter(platforms, _s.classify(uao.Platform));
   }
 
   incCounter(pages, rndUrl);

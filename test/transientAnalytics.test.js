@@ -185,7 +185,9 @@ describe('transientAnalytics', function() {
           if (err) {
             throw new Error(err);
           }
-          data.should.be.eql(statistics.browsers);
+          for (var prop in data) {
+            data[prop].should.be.eql(statistics.browsers[prop]);
+          }
           done();
         });
       });
@@ -195,27 +197,33 @@ describe('transientAnalytics', function() {
           if (err) {
             throw new Error(err);
           }
-          data.should.be.eql(statistics.versions);
+          for (var prop in data) {
+            data[prop].should.be.eql(statistics.versions[prop]);
+          }
           done();
         });
       });
 
-      it('getData("platform") should return an object containing browser statistics', function(done) {
+      it('getData("platform") should return an object containing platform statistics', function(done) {
         transientAnalytics.getData('platform', function(err, data) {
           if (err) {
             throw new Error(err);
           }
-          data.should.be.eql(statistics.platforms);
+          for (var prop in data) {
+            data[prop].should.be.eql(statistics.platforms[prop]);
+          }
           done();
         });
       });
 
-      it('getData("os") should return an object containing browser statistics', function(done) {
+      it('getData("os") should return an object containing os statistics', function(done) {
         transientAnalytics.getData('os', function(err, data) {
           if (err) {
             throw new Error(err);
           }
-          data.should.be.eql(statistics.oses);
+          for (var prop in data) {
+            data[prop].should.be.eql(statistics.oses[prop]);
+          }
           done();
         });
       });
