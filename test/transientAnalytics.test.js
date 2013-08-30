@@ -128,7 +128,7 @@ describe('transientAnalytics', function() {
           throw new Error(err);
         }
         kabamKernel = testSimulator.testServerFactory();
-        testSimulator.runMany(kabamKernel.app, 128, function() {
+        testSimulator.runMany(kabamKernel.app, 50, function() {
           statistics = testSimulator.statistics();
 
           // give time for the server to finish processing requests
