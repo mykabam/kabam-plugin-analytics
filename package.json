@@ -4,7 +4,7 @@
   "description": "Kabam Analytics Plugin",
   "main": "index.js",
   "dependencies": {
-    "async": "~0.2.9",
+    "async": "~0.9.2",
     "redis": "*",
     "hiredis": "*",
     "mongoose": "*",
